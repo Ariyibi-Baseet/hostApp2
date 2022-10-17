@@ -27,11 +27,6 @@ app.use(session({
     saveUninitialized : false
 }));
 app.use(flash())
-app.use(function(req, res, next){
-    res.locals.message = req.flash();
-    next();
-});
-
 
 // SET ROUTERS
 app.get('/', (req, res)=>{
@@ -39,11 +34,13 @@ app.get('/', (req, res)=>{
 })
 
 app.get('/article', (req, res)=>{
-    res.render('read_more')
+    res.render('read_more');
 })
 
 app.get('/registration', (req, res)=>{
-    res.render('registration', { message: req.flash('message') });
+  req.flash('message');
+    // res.render('registration', { message: req.flash('message') });
+    // res.render('registration', req.flash());
     res.render('registration');
 })
 
@@ -79,13 +76,14 @@ app.post('/registration',
         // console.log(validation_result.array({ onlyFirstError : true }))
         let sendError = '';
         // const validationErrorMessage = sendError;
-        validation_result.array().forEach((error) => {
+        validation_result.array({ onlyFirstError : true }).forEach((error) => {
         sendError += ' <br>' + error.msg;
       });
     //   let errorMessages = {
     //     error1 : sendError[0]
     //   }
       req.flash('message', sendError);
+      // req.flash("messages", { "error" : "Invalid username or password" });
       res.send(sendError);
     }
   }
