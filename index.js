@@ -35,11 +35,6 @@ app.use(session({
 }));
 app.use(flash())
 
-const form = {
-  email: body.email,
-  password:body.password,
-};
-console.log(form);
 
 // SET ROUTERS
 app.get('/', (req, res)=>{
@@ -52,11 +47,11 @@ app.get('/article', (req, res)=>{
 
 app.get('/registration', (req, res)=>{
   res.render('registration', { message: req.flash('messages') });
-  res.render('registration');
+  // res.render('registration');
 })
 
 app.get('/login', (req, res)=>{
-    res.render('login', { messageLogin: req.flash('loginMessage'), form : form })
+    res.render('login', { messageLogin: req.flash('loginMessage')})
 })
 
 
@@ -71,7 +66,7 @@ app.post('/registration',
   body('street_address_1', 'Street Address cannot be empty').notEmpty(),
   body('city', 'City cannot be empty').notEmpty(),
   body('postcode', 'Postcode cannot be empty').notEmpty(),
-  body('country', 'Street Address cannot be empty').notEmpty(),
+  body('country', 'Country Address cannot be empty').notEmpty(),
   body('tax_id', 'Tax Id cannot be empty').notEmpty(),
   body('password', 'Password cannot be empty').notEmpty(),
   body('password', 'Password must be between 6 and 12 characters plus number').isLength({min:6,max:12}),
@@ -85,11 +80,11 @@ app.post('/registration',
       res.send('You are good to go')
     }else{
         // console.log(validation_result.array({ onlyFirstError : true }))
-        let sendError = '';
+        let sendError = validation_result.array({ onlyFirstError : true });
         // const validationErrorMessage = sendError;
-        validation_result.array({ onlyFirstError : true }).forEach((error) => {
-        sendError += `\n` + error.msg;
-      });
+      //   validation_result.array({ onlyFirstError : true }).forEach((error) => {
+      //   sendError += `\n` + error.msg;
+      // });
       // console.log(req.flash())
       req.flash('messages', sendError);
       res.redirect('/registration');
@@ -119,7 +114,6 @@ app.post('/login',
       
       console.log(sendError);
       req.flash('loginMessage', sendError);
-      console.log(form)
       res.redirect('/login');
     }
   }
