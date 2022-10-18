@@ -142,4 +142,7 @@ body{
     background-color:var(--color2) !important;
     transition:background-color 300ms ease-in-out;
 }
+.error-output{
+    font-size:12px;
+}
 /* ENDS HERE */

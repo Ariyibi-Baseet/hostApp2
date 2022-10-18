@@ -19,11 +19,22 @@
                     <form action="/login" method="POST">
                         <a class="navbar-brand fs-3 fw-bold d-block m-auto text-center mb-3 login-brand"><i class="bi bi-wrench-adjustable-circle"></i> HostApp</a>
                         <h4 class="text-center mb-3">Sign In to HostApp</h4>
+                        <div class="col-12">
+                            {{#if messageLogin}}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <strong class="error-output">{{messageLogin.[0].msg}} <br></strong>
+                                <strong class="error-output">{{messageLogin.[1].msg}}</strong>
+                            </div>
+                            {{/if}}
+                        </div>
                         <div class="col-12 mb-3">
                             <input type="text" class="form-control" placeholder="Enter Email" aria-label="" name="email">
+                            <small class="text-danger"></small>
                         </div>
                         <div class="col-12 mb-3">
                             <input type="password" class="form-control" placeholder="Password" aria-label="" name="password">
+                            <small class="text-danger"></small>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
