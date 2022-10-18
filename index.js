@@ -35,6 +35,12 @@ app.use(session({
 }));
 app.use(flash())
 
+const form = {
+  email: body.email,
+  password:body.password,
+};
+console.log(form);
+
 // SET ROUTERS
 app.get('/', (req, res)=>{
     res.render('home');
@@ -50,7 +56,7 @@ app.get('/registration', (req, res)=>{
 })
 
 app.get('/login', (req, res)=>{
-    res.render('login', { messageLogin: req.flash('loginMessage') })
+    res.render('login', { messageLogin: req.flash('loginMessage'), form : form })
 })
 
 
@@ -110,8 +116,10 @@ app.post('/login',
       //   validation_result.array({ onlyFirstError : true }).forEach((error) => {
       //   sendError += error.msg;
       // });
+      
       console.log(sendError);
       req.flash('loginMessage', sendError);
+      console.log(form)
       res.redirect('/login');
     }
   }
